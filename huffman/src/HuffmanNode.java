@@ -2,9 +2,9 @@ public class HuffmanNode {
     HuffmanNode left;
     HuffmanNode right;
     Integer frequency;
-    Character c;
+    String c;
 
-    public HuffmanNode(Character c, Integer aFrequency, HuffmanNode aLeft, HuffmanNode aRight) {
+    public HuffmanNode(String c, Integer aFrequency, HuffmanNode aLeft, HuffmanNode aRight) {
         this.c = c;
         frequency = aFrequency;
         left = aLeft;
@@ -31,7 +31,7 @@ public class HuffmanNode {
         return frequency;
     }
 
-    public Character getCharacter() {
+    public String getValue() {
         return c;
     }
 }

@@ -12,7 +12,7 @@ public class HuffmanTree {
         priorityQueue = new PriorityQueue<>(aFrequency.size(), new HuffmanComparator());
 
         for(Character c : aFrequency.keySet()) {
-            priorityQueue.add(new HuffmanNode(c, aFrequency.get(c), null, null));
+            priorityQueue.add(new HuffmanNode(String.valueOf(c), aFrequency.get(c), null, null));
         }
     }
 
@@ -25,8 +25,7 @@ public class HuffmanTree {
             HuffmanNode first = priorityQueue.poll();
             HuffmanNode second = priorityQueue.poll();
 
-            Character c = null;
-            HuffmanNode newNode = new HuffmanNode(c, first.getFrequency() + second.getFrequency(), first, second);
+            HuffmanNode newNode = getNewHuffmanNode(first, second);
 
             root = newNode;
 
@@ -36,6 +35,20 @@ public class HuffmanTree {
         return root;
     }
 
+    private HuffmanNode getNewHuffmanNode(HuffmanNode first, HuffmanNode second) {
+        HuffmanNode newNode = null;
+        if(first.getFrequency() == second.getFrequency()) {
+            if(first.getValue().hashCode() < second.getValue().hashCode()) {
+                newNode = new HuffmanNode(first.getValue() + second.getValue(), first.getFrequency() + second.getFrequency(), first, second);
+            } else {
+                newNode = new HuffmanNode(second.getValue() + first.getValue(), first.getFrequency() + second.getFrequency(), second, first);
+            }
+        } else {
+            newNode = new HuffmanNode(first.getValue() + second.getValue(), first.getFrequency() + second.getFrequency(), first, second);
+        }
+        return newNode;
+    }
+
     public void printTree(HuffmanNode root, String s)
     {
         if(root == null) {
@@ -43,8 +56,8 @@ public class HuffmanTree {
         }
 
         if (root.getLeft() == null && root.getRight() == null) {
-            huffmanCodes.put(root.getCharacter(), s);
-            System.out.println(root.getCharacter() + " : " + s);
+            huffmanCodes.put(root.getValue().charAt(0), s);
+            System.out.println(root.getValue() + " : " + s);
             return;
         }
 
